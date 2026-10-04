@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEURON VPN — Твой свободный интернет</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="apple-touch-icon" sizes="192x192" href="./media/icon-v3-192.png" />
+    <link rel="apple-touch-icon" sizes="512x512" href="./media/icon-v3-512.png" />
+    <meta name="theme-color" content="#060a14" />
+  </head>
+  <body>
+    <!-- Фоновое видео -->
+    <video class="bg-video" autoplay muted loop playsinline poster="./media/bg-city-poster.webp">
+      <source src="./media/bg-city.mp4" type="video/mp4" />
+    </video>
+    <div class="bg-overlay"></div>
+
+    <!-- Кнопка музыки -->
+    <button id="music-btn" class="music-btn" aria-label="toggle music">🔇</button>
+    <audio id="bg-music" loop preload="auto" src="./media/bg-music.mp3"></audio>
+
+    <!-- Хедер -->
+    <header>
+      <h1>🔐 NEURON VPN</h1>
+      <p class="subtitle">Свободный интернет без границ · без логов · без блокировок</p>
+      <div class="pills">
+        <span class="pill">CH</span>
+        <span class="pill" id="pill-status">ПРОВЕРКА…</span>
+        <span class="pill">VLESS + TLS</span>
+      </div>
+    </header>
+
+    <!-- Табы -->
+    <nav class="tabs">
+      <button data-tab="home" class="active">Получить VPN</button>
+      <button data-tab="cabinet">Мой кабинет</button>
+      <button data-tab="instructions">Инструкции</button>
+      <button data-tab="plans">Тарифы</button>
+    </nav>
+
+    <!-- Панели -->
+    <main>
+      <!-- Панель 1: Получить VPN -->
+      <section data-panel="home" class="active">
+        <section class="card">
+          <h2>Добро пожаловать в NEURON VPN</h2>
+          <p class="hint">
+            Быстрый и стабильный доступ к любому контенту. Протокол VLESS + WebSocket + TLS.
+            Работает через Cloudflare — IP-сервера скрыт.
+          </p>
+        </section>
+
+        <section class="card" id="auth-card">
+          <h2>Регистрация / Вход</h2>
+          <form id="auth-form">
+            <label>Email
+              <input id="auth-email" type="email" placeholder="you@example.com" required />
+            </label>
+            <label>Пароль
+              <input id="auth-password" type="password" placeholder="Минимум 8 символов" minlength="8" required />
+            </label>
+            <button type="submit" id="auth-submit">Создать аккаунт</button>
+            <p id="auth-status" class="status"></p>
+            <p class="hint" style="text-align:center; margin-top:12px">
+              Уже есть аккаунт?
+              <a href="#" id="toggle-auth" style="color:#caa64e">Войти</a>
+            </p>
+          </form>
+        </section>
+
+        <section class="card" id="vpn-card" style="display:none">
+          <h2>🎉 Ваш VPN готов</h2>
+          <p class="hint" id="vpn-user"></p>
+          <div id="vpn-link-box" style="margin-top:12px">
+            <label>Ваша ссылка
+              <input id="vpn-link" type="text" readonly />
+            </label>
+            <button type="button" id="vpn-copy">📋 Скопировать ссылку</button>
+            <button type="button" id="vpn-hiddify">🚀 Подключить в Hiddify</button>
+            <button type="button" id="vpn-qr" style="background:linear-gradient(180deg,#2a3540,#141a22); border-color:#4aa8ff; color:#b8dfff">📱 Показать QR-код</button>
+          </div>
+          <div id="vpn-qr-box" style="display:none; margin-top:16px; text-align:center"></div>
+        </section>
+      </section>
+
+      <!-- Панель 2: Мой кабинет -->
+      <section data-panel="cabinet">
+        <section class="card" id="cabinet-card">
+          <h2>Мой кабинет</h2>
+          <div id="cabinet-info">
+            <p class="hint">Войдите, чтобы увидеть статус.</p>
+          </div>
+        </section>
+      </section>
+
+      <!-- Панель 3: Инструкции -->
+      <section data-panel="instructions">
+        <section class="card">
+          <h2>Как подключиться — Android</h2>
+          <ol>
+            <li>Скачай <b>Hiddify</b> из Google Play или с GitHub</li>
+            <li>Открой нашу ссылку и скопируй её</li>
+            <li>В Hiddify нажми <b>+ → Импорт из буфера</b></li>
+            <li>Нажми большую кнопку «Подключить»</li>
+          </ol>
+        </section>
+        <section class="card">
+          <h2>Как подключиться — iOS (iPhone)</h2>
+          <ol>
+            <li>Установи <b>Streisand</b> или <b>V2Box</b> из App Store</li>
+            <li>Открой нашу ссылку → появится QR-код</li>
+            <li>В приложении выбери <b>«Импорт из QR»</b></li>
+            <li>Отсканируй QR — конфиг подтянется</li>
+            <li>Нажми «Подключить»</li>
+          </ol>
+        </section>
+      </section>
+
+      <!-- Панель 4: Тарифы -->
+      <section data-panel="plans">
+        <section class="card">
+          <h2>Тарифы</h2>
+          <div class="plan-row">
+            <div>
+              <b>FREE</b>
+              <div class="hint">1 ГБ · 7 дней · 1 устройство</div>
+            </div>
+            <div class="plan-price">0 ₽</div>
+          </div>
+          <div class="plan-row">
+            <div>
+              <b>STANDARD</b>
+              <div class="hint">100 ГБ · 30 дней · 3 устройства</div>
+            </div>
+            <div class="plan-price">299 ₽</div>
+          </div>
+          <div class="plan-row">
+            <div>
+              <b>PREMIUM</b>
+              <div class="hint">Безлимит · 30 дней · 10 устройств</div>
+            </div>
+            <div class="plan-price">599 ₽</div>
+          </div>
+          <p class="hint" style="margin-top:14px">Оплата появится позже — пока тариф FREE активен для теста.</p>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <a href="https://github.com/oblachka81-cloud/Neuron" target="_blank" rel="noopener">source on GitHub</a>
+    </footer>
+
+    <script src="./app.js"></script>
+    <script src="./auth.js"></script>
+    <script src="./cabinet.js"></script>
+    <script src="./vpn.js"></script>
+  </body>
+</html>
