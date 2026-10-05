@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEURON VPN — Твой свободный интернет</title>
+    <title>NEURON VPN — Твоя свобода!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet" />
@@ -25,7 +25,7 @@
 
     <!-- Хедер -->
     <header>
-      <h1>🔐 NEURON VPN</h1>
+      <h1>🌍 NEURON VPN</h1>
       <p class="subtitle">Свободный интернет без границ · без логов · без блокировок</p>
       <div class="pills">
         <span class="pill">CH</span>
@@ -42,7 +42,6 @@
       <button data-tab="plans">Тарифы</button>
     </nav>
 
-    <!-- Панели -->
     <main>
       <!-- Панель 1: Получить VPN -->
       <section data-panel="home" class="active">
@@ -75,14 +74,20 @@
         <section class="card" id="vpn-card" style="display:none">
           <h2>🎉 Ваш VPN готов</h2>
           <p class="hint" id="vpn-user"></p>
-          <div id="vpn-link-box" style="margin-top:12px">
-            <label>Ваша ссылка
-              <input id="vpn-link" type="text" readonly />
-            </label>
-            <button type="button" id="vpn-copy">📋 Скопировать ссылку</button>
-            <button type="button" id="vpn-hiddify">🚀 Подключить в Hiddify</button>
-            <button type="button" id="vpn-qr" style="background:linear-gradient(180deg,#2a3540,#141a22); border-color:#4aa8ff; color:#b8dfff">📱 Показать QR-код</button>
+
+          <label>Ваша ссылка
+            <input id="vpn-link" type="text" readonly />
+          </label>
+
+          <!-- Кнопки 2×2 -->
+          <div class="vpn-btn-grid">
+            <button type="button" id="vpn-copy">📋 Скопировать</button>
+            <button type="button" id="vpn-qr" class="btn-secondary">📱 QR-код</button>
+            <button type="button" id="vpn-hiddify">🚀 Hiddify</button>
+            <button type="button" id="vpn-logout" class="btn-danger">🚪 Выйти</button>
           </div>
+
+          <!-- QR-код под кнопками -->
           <div id="vpn-qr-box" style="display:none; margin-top:16px; text-align:center"></div>
         </section>
       </section>
