@@ -121,8 +121,8 @@ input:focus, textarea:focus {
   box-shadow: 0 0 10px rgba(89,240,216,.35);
 }
 
-/* ── gold buttons ── */
-button[type="submit"], #submit-btn, #auth-submit {
+/* ── gold button (главная) ── */
+button[type="submit"], #auth-submit {
   width: 100%;
   font-family: 'Marcellus', serif;
   font-size: 16px; letter-spacing: .08em;
@@ -134,25 +134,59 @@ button[type="submit"], #submit-btn, #auth-submit {
   box-shadow: 0 0 14px rgba(202,166,78,.25);
   margin-top: 8px;
 }
-button[type="submit"]:hover, #submit-btn:hover, #auth-submit:hover {
+button[type="submit"]:hover, #auth-submit:hover {
   box-shadow: 0 0 22px rgba(202,166,78,.5);
 }
 button[type="submit"]:disabled { opacity: .55; box-shadow: none; cursor: not-allowed; }
 
-/* ── обычные кнопки (не submit) ── */
-button:not([type="submit"]) {
+/* ── VPN-кнопки: сетка 2×2 ── */
+.vpn-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.vpn-btn-grid button {
   font-family: 'Marcellus', serif;
   font-size: 14px; letter-spacing: .06em;
-  padding: 10px 16px; border-radius: 10px; cursor: pointer;
+  padding: 14px 10px; border-radius: 10px; cursor: pointer;
   color: #f5e3b0;
-  background: rgba(8,12,22,.55);
-  border: 1px solid rgba(202,166,78,.55);
-  text-shadow: 0 1px 6px rgba(0,0,0,.7);
-  margin-top: 8px;
-  margin-right: 6px;
+  background: linear-gradient(180deg, #3a3325, #151209 60%, #000);
+  border: 1px solid #caa64e;
+  text-shadow: 0 0 8px rgba(255,220,140,.45);
+  box-shadow: 0 0 14px rgba(202,166,78,.25);
+  transition: box-shadow .2s ease, transform .1s ease;
+  width: 100%;
+  margin: 0;
 }
-button:not([type="submit"]):hover {
-  box-shadow: 0 0 14px rgba(202,166,78,.4);
+.vpn-btn-grid button:hover {
+  box-shadow: 0 0 22px rgba(202,166,78,.5);
+  transform: translateY(-1px);
+}
+.vpn-btn-grid button:active { transform: translateY(1px); }
+
+/* вторичная — QR */
+.vpn-btn-grid .btn-secondary {
+  color: #b8dfff;
+  background: linear-gradient(180deg, #2a3540, #141a22);
+  border-color: #4aa8ff;
+  text-shadow: 0 0 8px rgba(74,168,255,.45);
+  box-shadow: 0 0 14px rgba(74,168,255,.25);
+}
+.vpn-btn-grid .btn-secondary:hover {
+  box-shadow: 0 0 22px rgba(74,168,255,.5);
+}
+
+/* danger — Выйти */
+.vpn-btn-grid .btn-danger {
+  color: #ffb8b8;
+  background: linear-gradient(180deg, #3a2020, #1a0a0a);
+  border-color: #ff6b6b;
+  text-shadow: 0 0 8px rgba(255,107,107,.4);
+  box-shadow: 0 0 14px rgba(255,107,107,.2);
+}
+.vpn-btn-grid .btn-danger:hover {
+  box-shadow: 0 0 22px rgba(255,107,107,.5);
 }
 
 /* ── plans ── */
@@ -212,5 +246,5 @@ footer a { color: #c3d4ea; font-size: 12px; text-shadow: 0 1px 6px rgba(0,0,0,.7
   label { font-size: 12px; }
   input, textarea { font-size: 14px; padding: 9px 10px; }
   button[type="submit"], #auth-submit { font-size: 14px; padding: 11px; }
-  button:not([type="submit"]) { font-size: 12px; padding: 9px 12px; }
+  .vpn-btn-grid button { font-size: 12px; padding: 12px 6px; }
 }
