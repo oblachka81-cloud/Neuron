@@ -2,8 +2,6 @@
 /* NEURON VPN — VPN (ссылка, копирование, QR, deeplink Hiddify)   */
 /* ═══════════════════════════════════════════════════════════════ */
 
-const WS_PATH = '/ws-5f847e4871c4f2cb';
-
 // ── Загрузка VPN-ссылки с API ──
 async function loadVpn() {
   const user = window.__nvAuth?.getUser?.();
@@ -20,7 +18,6 @@ async function loadVpn() {
     userEl.textContent = `Аккаунт: ${user.email} · UUID: ${user.uuid ? user.uuid.slice(0, 8) + '…' : '—'}`;
   }
 
-  // Запрашиваем ссылку у API
   try {
     const token = window.__nvAuth.getToken();
     const r = await fetch('/api/get-vpn-config', {
@@ -31,30 +28,32 @@ async function loadVpn() {
     if (!r.ok) throw new Error(j.error || 'Не удалось получить ссылку');
 
     const link = j.config_link;
+    const subUrl = j.subscription_url || link;
+
     if (linkInput) linkInput.value = link;
 
-    // Copy
+    // ── Copy ──
     copyBtn?.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(link);
-        copyBtn.textContent = '✅ Скопировано';
-        setTimeout(() => copyBtn.textContent = '📋 Скопировать ссылку', 2000);
       } catch {
-        // Fallback — выделяем текст
         linkInput?.select();
         document.execCommand('copy');
-        copyBtn.textContent = '✅ Скопировано';
-        setTimeout(() => copyBtn.textContent = '📋 Скопировать ссылку', 2000);
       }
+      copyBtn.textContent = '✅ Скопировано';
+      setTimeout(() => copyBtn.textContent = '📋 Скопировать ссылку', 2000);
     });
 
-    // Deeplink Hiddify
+    // ── Deeplink Hiddify через redirect.html ──
+    // Chrome блокирует hiddify:// из JS, но если это прямой клик по ссылке
+    // на HTML-странице — переход срабатывает. Поэтому открываем redirect.html.
     hiddifyBtn?.addEventListener('click', () => {
-      const deeplink = `hiddify://import/${encodeURIComponent(link)}#NEURON`;
-      window.location.href = deeplink;
+      const target = `hiddify://import/${encodeURIComponent(subUrl)}#NEURON`;
+      const redirect = `./redirect.html?to=${encodeURIComponent(target)}`;
+      window.open(redirect, '_blank');
     });
 
-    // QR-код (использует внешний API, никаких библиотек не нужно)
+    // ── QR-код ──
     qrBtn?.addEventListener('click', () => {
       if (!qrBox) return;
       if (qrBox.style.display === 'block') {
@@ -71,5 +70,4 @@ async function loadVpn() {
   }
 }
 
-// Экспорт
 window.__nvLoadVpn = loadVpn;
