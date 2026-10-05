@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEURON VPN — Твоя свобода!</title>
+    <title>NEURON VPN — Твой свободный интернет</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet" />
@@ -13,19 +13,16 @@
     <meta name="theme-color" content="#060a14" />
   </head>
   <body>
-    <!-- Фоновое видео -->
     <video class="bg-video" autoplay muted loop playsinline poster="./media/bg-city-poster.webp">
       <source src="./media/bg-city.mp4" type="video/mp4" />
     </video>
     <div class="bg-overlay"></div>
 
-    <!-- Кнопка музыки -->
     <button id="music-btn" class="music-btn" aria-label="toggle music">🔇</button>
     <audio id="bg-music" loop preload="auto" src="./media/bg-music.mp3"></audio>
 
-    <!-- Хедер -->
     <header>
-      <h1>🌍 NEURON VPN</h1>
+      <h1>🔐 NEURON VPN</h1>
       <p class="subtitle">Свободный интернет без границ · без логов · без блокировок</p>
       <div class="pills">
         <span class="pill">CH</span>
@@ -34,7 +31,6 @@
       </div>
     </header>
 
-    <!-- Табы -->
     <nav class="tabs">
       <button data-tab="home" class="active">Получить VPN</button>
       <button data-tab="cabinet">Мой кабинет</button>
@@ -43,7 +39,7 @@
     </nav>
 
     <main>
-      <!-- Панель 1: Получить VPN -->
+      <!-- Получить VPN -->
       <section data-panel="home" class="active">
         <section class="card">
           <h2>Добро пожаловать в NEURON VPN</h2>
@@ -79,7 +75,7 @@
             <input id="vpn-link" type="text" readonly />
           </label>
 
-          <!-- Кнопки 2×2 -->
+          <!-- 4 кнопки 2×2 -->
           <div class="vpn-btn-grid">
             <button type="button" id="vpn-copy">📋 Скопировать</button>
             <button type="button" id="vpn-qr" class="btn-secondary">📱 QR-код</button>
@@ -87,12 +83,11 @@
             <button type="button" id="vpn-logout" class="btn-danger">🚪 Выйти</button>
           </div>
 
-          <!-- QR-код под кнопками -->
           <div id="vpn-qr-box" style="display:none; margin-top:16px; text-align:center"></div>
         </section>
       </section>
 
-      <!-- Панель 2: Мой кабинет -->
+      <!-- Мой кабинет -->
       <section data-panel="cabinet">
         <section class="card" id="cabinet-card">
           <h2>Мой кабинет</h2>
@@ -102,7 +97,7 @@
         </section>
       </section>
 
-      <!-- Панель 3: Инструкции -->
+      <!-- Инструкции -->
       <section data-panel="instructions">
         <section class="card">
           <h2>Как подключиться — Android</h2>
@@ -125,7 +120,7 @@
         </section>
       </section>
 
-      <!-- Панель 4: Тарифы -->
+      <!-- Тарифы -->
       <section data-panel="plans">
         <section class="card">
           <h2>Тарифы</h2>
