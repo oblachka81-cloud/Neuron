@@ -1,10 +1,12 @@
 /* ═══════════════════════════════════════════════════════════════ */
-/* NEURON VPN — Cabinet (личный кабинет: статус, трафик, логаут)  */
+/* NEURON VPN — Cabinet (личный кабинет: статус, трафик, срок)    */
+/* Кнопка «Выйти» убрана — она теперь на главной в VPN-карточке   */
 /* ═══════════════════════════════════════════════════════════════ */
 
 function formatBytes(bytes) {
-  if (!bytes || bytes < 1024) return `${bytes || 0} B`;
-  const kb = bytes / 1024;
+  const n = Number(bytes || 0);
+  if (!n || n < 1024) return `${n} B`;
+  const kb = n / 1024;
   if (kb < 1024) return `${kb.toFixed(1)} KB`;
   const mb = kb / 1024;
   if (mb < 1024) return `${mb.toFixed(1)} MB`;
@@ -29,7 +31,6 @@ function daysLeft(iso) {
   } catch { return null; }
 }
 
-// ── Загрузка кабинета ──
 async function loadCabinet() {
   const box = document.getElementById('cabinet-info');
   if (!box) return;
@@ -54,8 +55,14 @@ async function loadCabinet() {
 
     const info = j.info || {};
     const limit = info.traffic_limit_gb || 0;
+    const used = info.traffic_used_bytes || 0;
     const expires = info.expires_at;
     const days = daysLeft(expires);
+    const uuid = info.uuid || user.uuid || '—';
+
+    // Процент использованного трафика
+    const usedGB = used / (1024 * 1024 * 1024);
+    const pct = limit > 0 ? Math.min(100, Math.round((usedGB / limit) * 100)) : 0;
 
     box.innerHTML = `
       <div class="cabinet-grid">
@@ -68,46 +75,33 @@ async function loadCabinet() {
           <div class="stat-value">${limit} GB</div>
         </div>
         <div class="stat-box">
+          <div class="stat-label">Использовано</div>
+          <div class="stat-value">${formatBytes(used)}</div>
+          <div class="stat-sub" style="color:#4ade80">${pct}%</div>
+        </div>
+        <div class="stat-box">
           <div class="stat-label">Осталось дней</div>
           <div class="stat-value">${days ?? '—'}</div>
         </div>
-        <div class="stat-box">
-          <div class="stat-label">Истекает</div>
-          <div class="stat-value" style="font-size:14px">${formatDate(expires)}</div>
-        </div>
       </div>
 
-      <div class="hint" style="margin-top:14px">
-        Аккаунт: <b>${user.email}</b><br>
-        UUID: <code>${user.uuid || '—'}</code>
+      <div class="hint" style="margin-top:16px">
+        <div>Истекает: <b>${formatDate(expires)}</b></div>
+        <div>Аккаунт: <b>${user.email}</b></div>
+        <div style="word-break:break-all">UUID: <code>${uuid}</code></div>
       </div>
-
-      <button type="button" id="cabinet-logout" style="margin-top:16px;background:linear-gradient(180deg,#5a2020,#2a0a0a);border-color:#ff6b6b;color:#ffb8b8">
-        🚪 Выйти из аккаунта
-      </button>
     `;
-
-    // Logout
-    document.getElementById('cabinet-logout')?.addEventListener('click', () => {
-      window.__nvAuth.clear();
-      location.reload();
-    });
 
   } catch (err) {
     box.innerHTML = `<p class="hint" style="color:#ff6b6b">❌ ${err.message}</p>`;
   }
 }
 
-// Экспорт для табов
 window.__nvRefreshCabinet = loadCabinet;
 
-// Запускаем при загрузке
+// Автозагрузка при переходе на таб «Мой кабинет»
 document.addEventListener('DOMContentLoaded', () => {
   if (window.__nvAuth?.isAuth?.()) {
-    // Если уже авторизован — покажем VPN-карточку и скроем форму
-    const card = document.getElementById('auth-card');
-    const vpnCard = document.getElementById('vpn-card');
-    if (card) card.style.display = 'none';
-    if (vpnCard) vpnCard.style.display = 'block';
+    loadCabinet();
   }
 });
