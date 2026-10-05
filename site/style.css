@@ -121,7 +121,7 @@ input:focus, textarea:focus {
   box-shadow: 0 0 10px rgba(89,240,216,.35);
 }
 
-/* ── gold button (главная) ── */
+/* ── основная золотая кнопка (submit) ── */
 button[type="submit"], #auth-submit {
   width: 100%;
   font-family: 'Marcellus', serif;
@@ -139,25 +139,36 @@ button[type="submit"]:hover, #auth-submit:hover {
 }
 button[type="submit"]:disabled { opacity: .55; box-shadow: none; cursor: not-allowed; }
 
-/* ── VPN-кнопки: сетка 2×2 ── */
+/* ═══════════════════════════════════════════════════════════════ */
+/* VPN-кнопки: ровная сетка 2×2, одинаковые размеры               */
+/* ═══════════════════════════════════════════════════════════════ */
 .vpn-btn-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  margin-top: 14px;
+  margin-top: 16px;
+  width: 100%;
 }
 .vpn-btn-grid button {
   font-family: 'Marcellus', serif;
-  font-size: 14px; letter-spacing: .06em;
-  padding: 14px 10px; border-radius: 10px; cursor: pointer;
+  font-size: 14px;
+  letter-spacing: .06em;
+  padding: 16px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  margin: 0;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   color: #f5e3b0;
   background: linear-gradient(180deg, #3a3325, #151209 60%, #000);
   border: 1px solid #caa64e;
   text-shadow: 0 0 8px rgba(255,220,140,.45);
   box-shadow: 0 0 14px rgba(202,166,78,.25);
   transition: box-shadow .2s ease, transform .1s ease;
-  width: 100%;
-  margin: 0;
 }
 .vpn-btn-grid button:hover {
   box-shadow: 0 0 22px rgba(202,166,78,.5);
@@ -246,5 +257,6 @@ footer a { color: #c3d4ea; font-size: 12px; text-shadow: 0 1px 6px rgba(0,0,0,.7
   label { font-size: 12px; }
   input, textarea { font-size: 14px; padding: 9px 10px; }
   button[type="submit"], #auth-submit { font-size: 14px; padding: 11px; }
-  .vpn-btn-grid button { font-size: 12px; padding: 12px 6px; }
+  .vpn-btn-grid { gap: 8px; }
+  .vpn-btn-grid button { font-size: 12.5px; padding: 14px 6px; min-height: 50px; }
 }
